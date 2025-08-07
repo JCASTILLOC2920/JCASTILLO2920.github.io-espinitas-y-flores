@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPINITAS Y FLORES - Plantas Ornamentales y Cactus</title>
+    <style>
+        /* PALETA DE COLORES EXTRAÍDA DEL LOGO */
+        :root {
+            --verde-oscuro: #2a5d3e;
+            --verde-medio: #3d8b5a;
+            --verde-claro: #6abf7d;
+            --beige: #f5f1e6;
+            --marron: #8b5a2b;
+            --blanco: #ffffff;
+            --sombra: rgba(0, 0, 0, 0.1);
+            --degrade-verde: linear-gradient(135deg, var(--verde-medio), var(--verde-claro));
+        }
+
+        /* Desplazamiento suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ESTILOS GENERALES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--beige);
+            padding-top: 100px; /* Espacio para el header fijo */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: var(--blanco);
+            box-shadow: 0 4px 12px var(--sombra);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        /* LOGO */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            margin-right: 15px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--verde-medio);
+            font-weight: 400;
+        }
+
+        /* NAVEGACIÓN PRINCIPAL */
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-list li {
+            margin-left: 25px;
+        }
+
+        .nav-list a {
+            text-decoration: none;
+            color: var(--verde-oscuro);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            color: var(--verde-medio);
+        }
+
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--verde-medio);
+            transition: width 0.3s ease;
+        }
+
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+
+        /* BOTÓN DE RESERVA */
+        .btn-reserva {
+            background-color: var(--verde-medio);
+            color: var(--blanco);
+            border: none;
+            padding: 10px 20px;
+            margin-left: 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(61, 139, 90, 0.3);
+        }
+
+        .btn-reserva:hover {
+            background-color: var(--verde-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(61, 139, 90, 0.4);
+        }
+
+        /* MENÚ HAMBURGUESA */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--verde-oscuro);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            transform-origin: left center;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(42, 93, 62, 0.7), rgba(42, 93, 62, 0.5)), 
+                        url('https://images.unsplash.com/photo-1485902407547-e1bdabbcee91?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            color: var(--blanco);
+            padding: 40px 0;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            line-height: 1.6;
+        }
+
+        .btn-hero {
+            display: inline-block;
+            background-color: var(--verde-claro);
+            color: var(--verde-oscuro);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--blanco);
+        }
+
+        .btn-hero:hover {
+            background-color: var(--blanco);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-plants {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            opacity: 0.8;
+        }
+
+        .plant-icon {
+            font-size: 5rem;
+            animation: float 6s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .plant-icon:nth-child(1) { animation-delay: 0s; }
+        .plant-icon:nth-child(2) { animation-delay: 1s; }
+        .plant-icon:nth-child(3) { animation-delay: 2s; }
+        .plant-icon:nth-child(4) { animation-delay: 3s; }
+        .plant-icon:nth-child(5) { animation-delay: 4s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* SECCIÓN DE SERVICIOS */
+        .servicios-section {
+            padding: 100px 5%;
+            background-color: var(--beige);
+        }
+
+        .servicios-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .servicios-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .servicios-header h2 {
+            color: var(--verde-oscuro);
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .servicios-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--verde-medio);
+            border-radius: 2px;
+        }
+
+        .servicios-header p {
+            color: var(--verde-oscuro);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 40px auto 0;
+            line-height: 1.7;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        .servicio-card {
+            background: var(--blanco);
+            border-radius: 12px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(106, 191, 125, 0.15);
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(61, 139, 90, 0.15);
+            border-color: rgba(106, 191, 125, 0.3);
+        }
+
+        .servicio-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(106, 191, 125, 0.1), rgba(61, 139, 90, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: var(--verde-medio);
+        }
+
+        .servicio-card h3 {
+            color: var(--verde-oscuro);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .servicio-card p {
+            color: var(--marron);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* ESTILOS RESPONSIVE PARA SERVICIOS */
+        @media (max-width: 992px) {
+            .servicios-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            
+            .servicio-card {
+                padding: 30px 25px;
+            }
+            
+            .servicios-header h2 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .servicios-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .servicios-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .servicios-header p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .servicios-header h2 {
+                font-size: 2rem;
+            }
+            
+            .servicios-header p {
+                font-size: 1rem;
+            }
+            
+            .servicio-card {
+                padding: 25px 20px;
+            }
+            
+            .servicio-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+        }
+
+        /* ESTILOS PARA MÓVILES */
+        @media (max-width: 860px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: var(--blanco);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 100px;
+                transition: all 0.4s ease;
+                box-shadow: -5px 0 15px var(--sombra);
+            }
+            
+            .nav.active {
+                right: 0;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 20px;
+            }
+            
+            .nav-list li {
+                margin: 15px 0;
+                width: 100%;
+            }
+            
+            .nav-list a {
+                display: block;
+                padding: 12px 15px;
+                font-size: 1.2rem;
+                border-bottom: 1px solid rgba(42, 93, 62, 0.1);
+            }
+            
+            .nav-list a::after {
+                display: none;
+            }
+            
+            .btn-reserva {
+                margin: 30px 20px 0;
+                width: calc(100% - 40px);
+                padding: 12px;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(2px, -1px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(2px, 1px);
+            }
+            
+            /* Hero responsive */
+            .hero {
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+                padding: 0 15px;
+            }
+            
+            .btn-hero {
+                font-size: 1rem;
+                padding: 14px 30px;
+            }
+            
+            .plant-icon {
+                font-size: 3.5rem;
+            }
+            
+            /* Ajustes para logo en móviles */
+            .logo {
+                height: 50px; /* Reducir tamaño en móviles */
+            }
+            
+            .logo-text {
+                font-size: 1.4rem; /* Reducir tamaño de texto en móviles */
+            }
+        }
+
+        /* Animación de desplazamiento */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo-container">
+            <!-- Logo añadido aquí -->
+            <img src="espinitasyfloreslogo.png" alt="Espinitas y Flores" class="logo">
+            <div class="logo-text">Espinitas<span> y Flores</span></div>
+        </div>
+        
+        <nav class="nav" id="mainNav">
+            <ul class="nav-list">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Quiénes Somos</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="btn-reserva">Reserva Online</button>
+        </nav>
+        
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Transforma tu espacio con naturaleza viva</h1>
+            <p>Descubre nuestra exclusiva colección de plantas ornamentales, cactus y accesorios cuidadosamente seleccionados para tu hogar o negocio.</p>
+            <a href="#servicios" class="btn-hero">Ver Servicios</a>
+        </div>
+        
+        <div class="hero-plants">
+            <div class="plant-icon">🌵</div>
+            <div class="plant-icon">🌿</div>
+            <div class="plant-icon">🌸</div>
+            <div class="plant-icon">🪴</div>
+            <div class="plant-icon">🌱</div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE SERVICIOS -->
+    <section id="servicios" class="servicios-section">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2>Nuestros Servicios</h2>
+                <p>En Espinitas y Flores nos dedicamos a ofrecerte la mejor experiencia en compra de plantas y accesorios, con servicios diseñados para satisfacer todas tus necesidades botánicas.</p>
+            </div>
+            
+            <div class="servicios-grid">
+                <!-- Servicio 1 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🌿</div>
+                    <h3>Amplia selección de plantas</h3>
+                    <p>Ofrecemos una variedad extensa de plantas ornamentales, cactus y suculentas para todos los gustos.</p>
+                </div>
+                
+                <!-- Servicio 2 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">💻</div>
+                    <h3>Compra en línea</h3>
+                    <p>Puedes ordenar fácilmente a través de nuestro sitio web desde la comodidad de tu hogar.</p>
+                </div>
+                
+                <!-- Servicio 3 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🚚</div>
+                    <h3>Envío a domicilio</h3>
+                    <p>Enviamos las plantas directamente a tu puerta, con cuidado para asegurar su llegada en perfecto estado.</p>
+                </div>
+                
+                <!-- Servicio 4 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">📦</div>
+                    <h3>Opciones al por mayor</h3>
+                    <p>Disponibles para negocios o compras en grandes cantidades con precios especiales.</p>
+                </div>
+                
+                <!-- Servicio 5 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">📚</div>
+                    <h3>Guías de cuidado</h3>
+                    <p>Proporcionamos consejos expertos sobre cómo cuidar tus plantas para que crezcan saludables.</p>
+                </div>
+                
+                <!-- Servicio 6 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🎁</div>
+                    <h3>Ofertas especiales</h3>
+                    <p>Descuentos y promociones exclusivas, incluyendo ventas estacionales y ofertas de lanzamiento.</p>
+                </div>
+                
+                <!-- Servicio 7 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🪴</div>
+                    <h3>Productos adicionales</h3>
+                    <p>Vendemos macetas, tierra, fertilizantes y otros accesorios esenciales para tus plantas.</p>
+                </div>
+                
+                <!-- Servicio 8 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">👩‍💼</div>
+                    <h3>Soporte al cliente</h3>
+                    <p>Estamos disponibles para responder tus preguntas y ayudarte con cualquier necesidad relacionada con plantas.</p>
+                </div>
+                
+                <!-- Servicio 9 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🔒</div>
+                    <h3>Pagos seguros</h3>
+                    <p>Ofrecemos múltiples métodos de pago seguros para garantizar una transacción sin preocupaciones.</p>
+                </div>
+                
+                <!-- Servicio 10 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🔄</div>
+                    <h3>Políticas de devolución</h3>
+                    <p>Claras políticas para devoluciones o reembolsos si no estás completamente satisfecho.</p>
+                </div>
+                
+                <!-- Servicio 11 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🎓</div>
+                    <h3>Contenido educativo</h3>
+                    <p>Artículos, blogs y videos educativos sobre el cuidado de plantas y técnicas de jardinería.</p>
+                </div>
+                
+                <!-- Servicio 12 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">📅</div>
+                    <h3>Servicios de suscripción</h3>
+                    <p>Entregas regulares de plantas nuevas para mantener tu colección siempre fresca y diversa.</p>
+                </div>
+                
+                <!-- Servicio 13 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🎨</div>
+                    <h3>Arreglos personalizados</h3>
+                    <p>Diseños a medida para regalos o decoraciones especiales que se adapten a tus necesidades.</p>
+                </div>
+                
+                <!-- Servicio 14 -->
+                <div class="servicio-card">
+                    <div class="servicio-icon">🎀</div>
+                    <h3>Opciones de regalo</h3>
+                    <p>Incluye envoltura de regalo y mensajes personalizados para hacer tus obsequios más especiales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN QUIÉNES SOMOS -->
+    <section id="nosotros" class="servicios-section" style="background-color: #e9f5ec;">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2>Quiénes Somos</h2>
+                <p>Conoce más sobre nuestra pasión por las plantas y nuestro compromiso con la naturaleza.</p>
+            </div>
+            
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon">🌱</div>
+                    <h3>Nuestra Historia</h3>
+                    <p>Espinitas y Flores nació en 2010 con el sueño de llevar la naturaleza a cada hogar.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">🌍</div>
+                    <h3>Misión</h3>
+                    <p>Promover el amor por las plantas y contribuir a un mundo más verde y sostenible.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">👥</div>
+                    <h3>Equipo</h3>
+                    <p>Contamos con expertos en botánica, diseño y atención al cliente apasionados por las plantas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN BLOG -->
+    <section id="blog" class="servicios-section">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2>Blog y Consejos</h3>
+                <p>Aprende con nuestros artículos y guías sobre el cuidado de plantas.</p>
+            </div>
+            
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon">📝</div>
+                    <h3>Cuidado de Cactus</h3>
+                    <p>Guía completa para mantener tus cactus saludables en cualquier entorno.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">💧</div>
+                    <h3>Riego Inteligente</h3>
+                    <p>Aprende a regar tus plantas correctamente según su tipo y estación.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">🏡</div>
+                    <h3>Decoración con Plantas</h3>
+                    <p>Ideas creativas para incorporar plantas en la decoración de tu hogar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section id="contacto" class="servicios-section" style="background-color: #e9f5ec;">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2>Contacto</h2>
+                <p>Estamos aquí para ayudarte con cualquier consulta sobre tus plantas.</p>
+            </div>
+            
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon">📍</div>
+                    <h3>Ubicación</h3>
+                    <p>MZ M2 lote 13 jardines de Chillón. Distrito de Puente Piedra.</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">📞</div>
+                    <h3>Teléfono</h3>
+                    <p>986396733</p>
+                </div>
+                
+                <div class="servicio-card">
+                    <div class="servicio-icon">✉️</div>
+                    <h3>Email</h3>
+                    <p>jclab59@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            // Toggle del menú móvil
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+            
+            // Manejo de navegación
+            const navLinks = document.querySelectorAll('.nav-list a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Si es un enlace interno
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetSection = document.querySelector(targetId);
+                        
+                        if (targetSection) {
+                            // Desplazamiento suave con offset para el header
+                            const offset = 100;
+                            const targetPosition = targetSection.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    
+                    // Cerrar menú en móviles
+                    if (window.innerWidth <= 860) {
+                        mainNav.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Actualizar enlace activo al desplazarse
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section');
+                const scrollPosition = window.scrollY + 150; // Offset para activación
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        // Actualizar enlace activo en el menú
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Inicializar sección activa
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>
