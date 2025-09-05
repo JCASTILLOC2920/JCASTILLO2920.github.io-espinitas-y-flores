@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Espinitas y Flores – Plantas Ornamentales y Cactus</title>
+  <meta name="description" content="Compra online plantas ornamentales, cactus y suculentas. Envíos a todo Lima.">
+  <link rel="canonical" href="https://espinitasyflores.pe"/>
+  <link rel="icon" type="image/webp" href="img/logo-blanco.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <style>
+    :root{--crema:#f8f5f0;--bosque:#1e3932;--sage:#6abf7d;--coral:#ff6b6b;--carbon:#2d2d2d;--pastel:#b8e0d4}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--crema);color:var(--carbon);line-height:1.6}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--pastel);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+    header img.logo{height:clamp(64px,6vw,96px)}
+    nav{position:fixed;top:0;left:-100vw;width:260px;height:100vh;background:var(--bosque);padding:4rem 1.5rem 1rem;color:#fff;transition:left .3s ease;z-index:999}
+    nav.open{left:0}
+    nav ul{list-style:none;display:flex;flex-direction:column;gap:1.25rem}
+    nav a{background:var(--sage);color:#fff;padding:.5rem 1rem;border-radius:20px;font-weight:600;font-size:.9rem;transition:.3s}
+    nav a:hover{background:var(--coral);transform:scale(1.05)}
+    .hamburger{width:28px;height:24px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+    .hamburger span{height:3px;background:var(--bosque);transition:.3s}
+    .hamburger.open span:nth-child(1){transform:translateY(10px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:translateY(-10px) rotate(-45deg)}
+    section{min-height:100vh;padding:6rem 1rem 2rem;display:none;scroll-margin-top:80px}
+    section.active{display:block}
+    .hero{background:url('img/hero.webp') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;position:relative}
+    .hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    .hero>div{position:relative;z-index:2}
+    .hero h1{font-family:'Playfair Display';font-size:clamp(2rem,5vw+1rem,3.5rem);margin-bottom:.5rem}
+    .hero p{font-size:clamp(1rem,2vw+.5rem,1.25rem);margin-bottom:2rem}
+    .btn{background:var(--coral);color:#fff;padding:.75rem 1.5rem;border-radius:50px;font-weight:700;letter-spacing:.5px;transition:.3s}
+    .btn:hover{background:#ff5252;transform:translateY(-2px)}
+    .grid{display:grid;gap:1.5rem;margin-top:2rem}
+    .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.05);transition:.4s}
+    .card img{width:100%;height:200px;object-fit:cover}
+    .card-content{padding:1.25rem}
+    .card h3{margin-bottom:.5rem;font-family:'Playfair Display';font-size:1.25rem}
+    .card:hover{transform:translateY(-6px) rotate(1deg);box-shadow:0 12px 24px rgba(0,0,0,.15)}
+    .card img.hover{opacity:0;transition:opacity .4s}
+    .card:hover img.hover{opacity:1}
+    @media(min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:860px){.hamburger{display:none}nav{position:static;width:auto;height:auto;background:transparent;padding:0}nav ul{flex-direction:row;gap:1rem}}
+    #map-container{position:relative;height:300px;border-radius:16px;overflow:hidden;margin-top:1.5rem}
+    #map{height:100%}
+    .street-btn{position:absolute;top:10px;right:10px;background:var(--coral);color:#fff;border:none;padding:.5rem .75rem;border-radius:8px;cursor:pointer;font-size:.8rem;z-index:10}
+    #chatbot{position:fixed;bottom:20px;right:20px;z-index:9999;font-family:Inter,system-ui,sans-serif}
+    #chatbot .bubble{width:60px;height:60px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:.3s}
+    #chatbot .bubble:hover{transform:scale(1.1)}
+    #chatbot .window{position:absolute;bottom:70px;right:0;width:320px;max-width:90vw;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden}
+    #chatbot .window.show{display:flex;animation:fadeIn .3s}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    #chatbot header{background:var(--bosque);color:#fff;padding:.75rem 1rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+    #chatbot .body{padding:1rem;font-size:.9rem;max-height:300px;overflow-y:auto}
+    #chatbot .faq a{display:block;background:var(--crema);padding:.5rem .75rem;border-radius:8px;margin-bottom:.5rem;cursor:pointer;transition:.2s}
+    #chatbot .faq a:hover{background:var(--sage);color:#fff}
+    #chatbot .whatsapp{background:var(--coral);color:#fff;text-align:center;padding:.75rem;font-weight:600;border:none;cursor:pointer;width:100%}
+    #chatbot .close{margin-left:auto;cursor:pointer;font-size:1.2rem}
+    #chatbot .nube{position:absolute;top:-45px;right:5px;background:#fff;border-radius:12px;padding:.5rem .75rem;font-size:.75rem;color:var(--bosque);box-shadow:0 2px 8px rgba(0,0,0,.1);white-space:nowrap}
+    #chatbot .nube::after{content:'';position:absolute;bottom:-8px;right:12px;width:0;height:0;border:8px solid transparent;border-top-color:#fff}
+    .animate-text{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+    .animate-text.show{opacity:1;transform:translateY(0)}
+    .float{animation:float 3s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <a href="#inicio" class="logo"><img src="img/logo-blanco.webp" alt="Espinitas y Flores" class="logo"></a>
+    <div class="hamburger" id="hamburger" aria-controls="nav" aria-expanded="false"><span></span><span></span><span></span></div>
+    <nav id="nav">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#nosotros">Quiénes Somos</a></li><li><a href="#blog">Blog</a></li><li><a href="#contacto">Contacto</a></li><li><a href="#productos">Productos/Galería</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="hero active">
+    <div>
+      <h1 class="animate-text">Transforma tu espacio con naturaleza viva</h1>
+      <p class="animate-text">
+        Descubre el poder transformador de la naturaleza: cada planta es una oportunidad para crear tu santuario de tranquilidad y estilo único. 🌵✨<br>
+        Nuestros clientes ya están cultivando espacios más felices—únete a la comunidad que elige bienestar y diseño consciente.<br>
+        ✅ Envíos garantizados + Colección exclusiva limitada: convierte hoy tu hogar en un oasis con las variedades más cotizadas.
+      </p>
+      <a href="#servicios" class="btn float">Ver Servicios</a>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <h2 class="animate-text" style="text-align:center;font-family:'Playfair Display';">Nuestros Servicios</h2>
+    <div class="grid">
+      <div class="card"><img src="img/servicio-plantas.webp" alt="Plantas"><div class="card-content"><h3>Amplia selección de plantas</h3><p>Ornamentales, cactus y suculentas.</p></div></div>
+      <div class="card"><img src="img/servicio-delivery.webp" alt="Delivery"><div class="card-content"><h3>Envío a domicilio</h3><p>Llegan en perfecto estado a tu puerta.</p></div></div>
+      <div class="card"><img src="img/servicio-online.webp" alt="Compra en línea"><div class="card-content"><h3>Compra en línea</h3><p>Desde la comodidad de tu hogar.</p></div></div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <h2 class="animate-text" style="text-align:center;font-family:'Playfair Display';">Quiénes Somos</h2>
+    <div class="grid">
+      <div class="card"><img src="img/nosotros-historia.webp" alt="Historia"><div class="card-content"><h3>Nuestra Historia</h3><p>Desde nuestros inicios, hemos conectado a miles de hogares con la naturaleza...</p></div></div>
+      <div class="card"><img src="img/nosotros-mision-2.webp" alt="Misión"><div class="card-content"><h3>Misión</h3><p>Promovemos un futuro más verde y consciente...</p></div></div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <h2 class="animate-text" style="text-align:center;font-family:'Playfair Display';">Blog y Consejos</h2>
+    <div class="grid">
+      <div class="card"><img src="img/servicio-plantas.webp" alt="Cuidado"><div class="card-content"><h3>Cuidado de Cactus</h3><p>Guía completa para mantenerlos saludables.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2 class="animate-text" style="text-align:center;font-family:'Playfair Display';">Contacto</h2>
+    <div class="grid">
+      <div class="card"><div class="card-content"><h3>Ubicación</h3><p>MZ M2 lote 13, Jardines de Chillón – Puente Piedra</p></div></div>
+      <div class="card"><div class="card-content"><h3>Correo</h3><p>jclab59.@gmail.com</p></div></div>
+      <div class="card"><div class="card-content"><h3>Horario</h3><p>L-V 9:00 AM - 6:00 PM<br>Sábados 10:00 AM - 4:00 PM</p></div></div>
+    </div>
+    <div id="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="300" style="border:0;" allowfullscreen loading="lazy"></iframe>
+      <button class="street-btn" onclick="window.open('https://www.google.com/maps/@-11.932833,-77.084611,3a...','_blank')">Street View</button>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="productos" class="active">
+    <h2 class="animate-text" style="text-align:center;font-family:'Playfair Display';">Productos / Galería</h2>
+    <div style="text-align:center;margin-top:3rem">
+      <p style="font-size:1.5rem;color:var(--bosque);">🚧 Página en construcción</p>
+      <p style="font-size:1rem;color:var(--carbon);">Pronto descubrirás nuestra galería exclusiva 🌿</p>
+    </div>
+  </section>
+
+  <!-- CHATBOT INTEGRADO A N8N -->
+  <div id="chatbot">
+    <div class="bubble" onclick="toggleChat()">💬
+      <div class="nube">¿Puedo atenderlo?</div>
+    </div>
+    <div class="window" id="chatWindow">
+      <header>💬 Chat en vivo<span class="close" onclick="toggleChat()">&times;</span></header>
+      <div class="body" id="chatBody">
+        <p><strong>🤖 Bot:</strong> ¡Hola! Soy tu asistente de Espinitas y Flores. ¿Qué planta buscas?</p>
+        <input id="chatInput" type="text" placeholder="Escribe aquí..." style="width:100%;padding:.5rem;margin-top:.5rem;border:1px solid #ccc;border-radius:8px;">
+        <button onclick="sendMessage()" style="width:100%;margin-top:.5rem;background:var(--coral);color:#fff;border:none;padding:.5rem;border-radius:8px;cursor:pointer;">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* NAVEGACIÓN SPA */
+    const hamb=document.getElementById('hamburger'),nav=document.getElementById('nav'),links=document.querySelectorAll('nav a'),sections=document.querySelectorAll('section');
+    function show(id){sections.forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');nav.classList.remove('open');hamb.setAttribute('aria-expanded','false')}
+    links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.getAttribute('href').slice(1));history.replaceState(null,null,'#'+a.getAttribute('href').slice(1))}));
+    hamb.addEventListener('click',()=>{const open=nav.classList.toggle('open');hamb.setAttribute('aria-expanded',open)});
+
+    /* CHAT CON N8N */
+    function toggleChat(){document.getElementById('chatWindow').classList.toggle('show')}
+    function sendMessage(){
+      const input=document.getElementById('chatInput');
+      const msg=input.value.trim();
+      if(!msg) return;
+      const body=document.getElementById('chatBody');
+      body.innerHTML+=`<p style="text-align:right"><strong>Tú:</strong> ${msg}</p>`;
+      input.value='';
+      fetch('http://localhost:5678/webhook-test/bac9611d-e5ea-4833-b4f7-1e1507d53bff',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:msg})
+      })
+      .then(r=>r.json())
+      .then(data=>{
+        body.innerHTML+=`<p><strong>🤖 Bot:</strong> ${data.response || 'Gracias por tu mensaje'}</p>`;
+        body.scrollTop=body.scrollHeight;
+      })
+      .catch(()=>{body.innerHTML+='<p><strong>🤖 Bot:</strong> Error al conectar con la IA</p>'});
+    }
+    document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage()});
+
+    /* GSAP */
+    window.addEventListener('load',()=>{gsap.from('.animate-text',{y:50,opacity:0,duration:1,stagger:.2});gsap.from('.float',{y:0,duration:2,repeat:-1,yoyo:true,ease:'power1.inOut'})});
+    const hash=location.hash.slice(1)||'inicio';show(hash);
+  </script>
+</body>
+</html>
