@@ -1,0 +1,62 @@
+{
+    "name": "Espinitas y Flores - Plantas Ornamentales",
+    "short_name": "Espinitas y Flores",
+    "description": "Tienda especializada en plantas ornamentales, cactus y accesorios. Transforma tu espacio con naturaleza viva.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2e7d32",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "es",
+    "icons": [
+        {
+            "src": "logo1.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "logo1.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["shopping", "lifestyle", "business"],
+    "screenshots": [
+        {
+            "src": "img/hero.webp",
+            "sizes": "1280x720",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "Página principal de Espinitas y Flores"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Ver Galería",
+            "short_name": "Galería",
+            "description": "Explora nuestra colección de plantas",
+            "url": "/#galeria",
+            "icons": [
+                {
+                    "src": "logo1.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Contactar",
+            "short_name": "Contacto",
+            "description": "Ponte en contacto con nosotros",
+            "url": "/#contacto",
+            "icons": [
+                {
+                    "src": "logo1.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ]
+}
